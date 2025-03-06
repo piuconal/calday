@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const lastChangeDate = new Date(dateString);
     if (isNaN(lastChangeDate)) return "-";
 
-    // Cộng thêm 90 ngày vào last_change_day
     const targetDate = new Date(lastChangeDate);
     targetDate.setDate(targetDate.getDate() + 90);
 
@@ -53,14 +52,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         rowsToDisplay.push({
           html: `
-              <tr>
+              <tr data-id="${row.id}">
                 <td class="${dangerClass}">${row.ship_name || "-"}</td>
                 <td class="${dangerClass}">${row.name || "-"}</td>
                 <td class="${dangerClass} num">${formatDate(
             row.last_change_day
           )}</td>
                 <td class="${dangerClass} num">${remainingDays}</td>
-                <td class="${dangerClass}">${row.note_in || "-"}</td>
+                <td class="${dangerClass} note-cell">${row.note_in || ""}</td>
               </tr>
             `,
           remainingDays: remainingDays,
@@ -71,6 +70,38 @@ document.addEventListener("DOMContentLoaded", function () {
       rowsToDisplay.forEach((row) =>
         tableBody.insertAdjacentHTML("beforeend", row.html)
       );
+
+      // Thêm sự kiện dblclick để chỉnh sửa ghi chú
+      document.querySelectorAll(".note-cell").forEach((cell) => {
+        cell.addEventListener("dblclick", function () {
+          const row = this.closest("tr");
+          const id = row.dataset.id;
+          const currentNote = this.textContent.trim();
+
+          const newNote = prompt("Nhập ghi chú mới:", currentNote);
+          if (newNote !== null) {
+            // Cập nhật giao diện ngay lập tức
+            this.textContent = newNote;
+
+            // Gửi AJAX để lưu vào database
+            fetch("update_note.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: new URLSearchParams({ id, note: newNote }),
+            })
+              .then((response) => response.text())
+              .then((result) => {
+                console.log("Kết quả cập nhật:", result);
+                if (result.trim() !== "success") {
+                  alert("Cập nhật thất bại: " + result);
+                }
+              })
+              .catch((error) => console.error("Lỗi cập nhật ghi chú:", error));
+          }
+        });
+      });
     })
     .catch((error) => console.error("Lỗi tải dữ liệu:", error));
 });

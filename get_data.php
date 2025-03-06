@@ -1,5 +1,4 @@
 <?php
-header('Content-Type: application/json');
 require 'db_connect.php'; // Kết nối database
 
 if ($conn->connect_error) {
