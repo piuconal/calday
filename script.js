@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then((data) => {
       console.log("Dữ liệu nhận được:", data);
       const tableBody = document.getElementById("tableBody");
-
+      const totalRow = document.getElementById("totalRow");
       if (!Array.isArray(data)) {
         console.error("Dữ liệu không phải là mảng:", data);
         return;
@@ -49,7 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
       data.forEach((row) => {
         const remainingDays = calculateDaysLeft(row.last_change_day);
         const dangerClass = getDangerLevelClass(remainingDays);
-
+        // Hiển thị tổng số lượng bản ghi
+        totalRow.textContent = `SUM: ${data.length}🧝🏼‍♀️`;
         rowsToDisplay.push({
           html: `
               <tr data-id="${row.id}">
