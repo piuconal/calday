@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PiuConal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <video src="header_deskop.mp4" autoplay muted loop></video>
+  </header>
+
+  <div class="table-container">
+    <table class="table table-striped table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">선박명</th>
+          <th scope="col">외국인선원명</th>
+          <th scope="col">입국일</th>
+          <th scope="col">남은</th>
+          <th scope="col">Ghi chú</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <!-- Dữ liệu sẽ được thêm ở đây -->
+      </tbody>
+    </table>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
