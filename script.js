@@ -49,8 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
       data.forEach((row) => {
         const remainingDays = calculateDaysLeft(row.last_change_day);
         const dangerClass = getDangerLevelClass(remainingDays);
-        // Hiển thị tổng số lượng bản ghi
-        totalRow.textContent = `SUM: ${data.length}🧝🏼‍♀️`;
+
         rowsToDisplay.push({
           html: `
               <tr data-id="${row.id}">
@@ -71,7 +70,8 @@ document.addEventListener("DOMContentLoaded", function () {
       rowsToDisplay.forEach((row) =>
         tableBody.insertAdjacentHTML("beforeend", row.html)
       );
-
+      const totalRows = document.querySelectorAll("#tableBody tr").length;
+      totalRow.textContent = `SUM: ${totalRows} 🧝🏼‍♀️`;
       // Thêm sự kiện dblclick để chỉnh sửa ghi chú
       document.querySelectorAll(".note-cell").forEach((cell) => {
         cell.addEventListener("dblclick", function () {
